@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ChillInDijonMartin</string>
+    <string name="base_url_api">https://my-json-server.typicode.com/lpotherat/pois/pois</string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>

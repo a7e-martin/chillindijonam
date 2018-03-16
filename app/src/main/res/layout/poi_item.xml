@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/lblAddress"
+        android:layout_width="203dp"
+        android:layout_height="36dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/lblPostalCode"
+        android:layout_width="59dp"
+        android:layout_height="38dp"
+        tools:layout_editor_absoluteX="246dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/lblCity"
+        android:layout_width="201dp"
+        android:layout_height="30dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="67dp" />
+    <TextView
+        android:id="@+id/lblType"
+        android:layout_width="201dp"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:id="@+id/lblName"
+        android:layout_width="201dp"
+        android:layout_height="30dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="67dp" />
+</android.support.constraint.ConstraintLayout>
