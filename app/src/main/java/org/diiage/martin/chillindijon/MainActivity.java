@@ -1,6 +1,9 @@
 package org.diiage.martin.chillindijon;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.diiage.martin.chillindijon.models.Poi;
+import org.diiage.martin.chillindijon.utils.DatabaseHelper;
 import org.diiage.martin.chillindijon.utils.PoiRetriever;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -124,10 +128,42 @@ public class MainActivity extends AppCompatActivity implements PoiRetriever.Asyn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        DatabaseHelper helper = new DatabaseHelper(this);
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id", "a-bbddd-dazdad-dqs");
+        contentValues.put("note", 4);
+        long bookmarkId = db.insert("bookmarks", null, contentValues);
+
+        Cursor cursor = db.query(
+            "bookmarks",
+            new String[]{"id", "poi_id", "note", "created"},
+            "note >= ?",
+            new String[]{"4"},
+            null,
+            null,
+            "note DESC"
+        );
+
+        while(cursor.moveToNext()){
+            long id = cursor.getLong(0);
+            long poi_id = cursor.getLong(1);
+            long note = cursor.getLong(2);
+            long created = cursor.getLong(3);
+        }
+
+        ContentValues updateValues = new ContentValues();
+        updateValues.put("note", 5);
+        db.update(
+            "bookmarks",
+            updateValues,
+            "id = ?",
+            new String[]{"1"}
+        );
+
         final String baseUrlApi = getResources().getString(R.string.base_url_api);
-        ListView lstPois = findViewById(R.id.lstPois);
-        PoiAdapter poiAdapter = new PoiAdapter(this, this.pois);
-        lstPois.setAdapter(poiAdapter);
 
         PoiRetriever poiRetriever = new PoiRetriever();
         poiRetriever.execute(baseUrlApi);
@@ -138,5 +174,9 @@ public class MainActivity extends AppCompatActivity implements PoiRetriever.Asyn
     @Override
     public void processFinish(ArrayList<Poi> result) {
         this.pois = result;
+        ListView lstPois = findViewById(R.id.lstPois);
+        PoiAdapter poiAdapter = new PoiAdapter(this, this.pois);
+        lstPois.setAdapter(poiAdapter);
+
     }
 }
