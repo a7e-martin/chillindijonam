@@ -1,9 +1,11 @@
 package org.diiage.martin.chillindijon;
 
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -129,21 +131,22 @@ public class MainActivity extends AppCompatActivity implements PoiRetriever.Asyn
         setContentView(R.layout.activity_main);
 
 
-        DatabaseHelper helper = new DatabaseHelper(this);
-        SQLiteDatabase db = helper.getWritableDatabase();
+        Uri.Builder b = new Uri.Builder();
+        Uri u = b.scheme("content")
+                .authority("org.diiage.martin.chillindijon.provider")
+                .appendPath("bookmarks").build();
+
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", "a-bbddd-dazdad-dqs");
         contentValues.put("note", 4);
-        long bookmarkId = db.insert("bookmarks", null, contentValues);
+        Uri insertedUri = getContentResolver().insert(u, contentValues);
 
-        Cursor cursor = db.query(
-            "bookmarks",
+        Cursor cursor = getContentResolver().query(
+            u,
             new String[]{"id", "poi_id", "note", "created"},
             "note >= ?",
             new String[]{"4"},
-            null,
-            null,
             "note DESC"
         );
 
@@ -156,8 +159,12 @@ public class MainActivity extends AppCompatActivity implements PoiRetriever.Asyn
 
         ContentValues updateValues = new ContentValues();
         updateValues.put("note", 5);
-        db.update(
-            "bookmarks",
+        Uri updateUri = b.scheme("content")
+                .authority("org.diiage.martin.chillindijon.provider")
+                .appendPath("bookmarks").build();
+
+        getContentResolver().update(
+            updateUri,
             updateValues,
             "id = ?",
             new String[]{"1"}

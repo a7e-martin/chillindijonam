@@ -20,8 +20,11 @@
             </intent-filter>
 
         </activity>
+        <provider
+            android:authorities="org.diiage.martin.chillindijon.provider"
+            android:name=".utils.ChillinProvider">
+        </provider>
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-
 </manifest>
